@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QFile>
 #include <QFileDialog>
+#include <QHeaderView>
+#include <QAbstractItemView>
 #include "ui_mywidget.h"
 
 QString mFilename = "C:/test/myfile.txt";
@@ -30,6 +32,19 @@ MyWidget::MyWidget(QWidget *parent)
     ColTotle << QStringLiteral("學號") << QStringLiteral("班級") << QStringLiteral("姓名")
              << QStringLiteral("電話");
     ui->tableWidget->setHorizontalHeaderLabels(ColTotle);
+    
+    // Enhance table appearance
+    ui->tableWidget->setShowGrid(true);
+    ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+    ui->tableWidget->verticalHeader()->setVisible(false);
+    
+    // Set column widths for better proportions
+    ui->tableWidget->setColumnWidth(0, 120);
+    ui->tableWidget->setColumnWidth(1, 120);
+    ui->tableWidget->setColumnWidth(2, 150);
 }
 
 MyWidget::~MyWidget()
@@ -51,6 +66,13 @@ void MyWidget::on_pushButton_clicked()
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 1, col2);
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 2, col3);
     ui->tableWidget->setItem(ui->tableWidget->rowCount() - 1, 3, col4);
+    
+    // Clear input fields after adding
+    ui->lineEdit->clear();
+    ui->lineEdit_2->clear();
+    ui->lineEdit_3->clear();
+    ui->lineEdit_4->clear();
+    ui->lineEdit->setFocus();
 }
 
 void MyWidget::on_pushButton_2_clicked()
